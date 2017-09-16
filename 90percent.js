@@ -12,37 +12,87 @@ app.listen(port, function() {
 });
 app.use(bodyParser());
 //
-app.post('/send', function(req, res){
+app.post('/send', function(request, response){
 
-  res.json(
-    {content: 'Server Response.'}
-    );
-  console.log("Request: " + req.body.content);
+  
+  console.log("Request: " + request.body.content);
+
+  //Take user input from the Ajax Post Request from the search box
+  var searchTerm = request.body.content;
+
+  //Send it to our Search USDA Api 
+  //searchUsdaApi(searchTerm);
+
+  //Our Response
+  response.json
+    ({
+      content: searchUsdaApi(searchTerm)
+    });
+
 });
 
-//USDA Info
-var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
-  ndbno = "01009",
-  usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
-  usdaAuth = {
-          method: 'get',
-          qs: {
-          	'api_key': usdaApiKey,
-          	'type': "b",
-          	'format': "json",
-          	'ndbno': ndbno
-          },
-          url: usdaUrl
-      };    
 
-//Calling our apiRequest and console.log the body
-apiRequest(usdaAuth);      
+function searchUsdaApi(searchTerm){
+  var query = searchTerm;
+  var results = 10;
+  var resultsArray = [];
+
+  var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
+    usdaSearchUrl = "https://api.nal.usda.gov/ndb/search/",
+    searchUsda = {
+      method: 'get',
+      qs: {
+        'api_key': usdaApiKey,
+        'q': query,
+        'format': "json",
+        'sort': "n",
+        'max': results
+      },
+      url: usdaSearchUrl
+    };
+
+  var body = apiRequest(searchUsda);
+
+  console.log(body);
+
+  // for (var i = 0; i < results; i++){
+  //   resultsArray[i] = { "Name": body.list.item[i].name, "NDBNO": body.list.item[i].ndbno };
+  //   console.log(resultsArray[i]);
+  // }
+
+  // return resultsArray;
+  
+}
+
+
+function usdaFoodLookup(foodNumber){
+  //USDA Info
+  var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
+      ndbno = "01009",
+      usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
+      usdaAuth = {
+              method: 'get',
+              qs: {
+                'api_key': usdaApiKey,
+                'type': "b",
+                'format': "json",
+                'ndbno': ndbno
+              },
+              url: usdaUrl
+  };    
+
+  var body = apiRequest(usdaAuth);   
+
+  console.log(body.report.food.name);
+
+  console.log(body.report.food.nutrients[1].value);
+}
+
 
 function apiRequest(auth){
 	request(auth, function(err, res, body){   //Beginning of request
-		var body = JSON.parse(body);
-    console.log(body.report.food.name);
-    console.log(body.report.food.nutrients[1].value);
+    
+    return body;
 
 	});  //End of Request
 }
