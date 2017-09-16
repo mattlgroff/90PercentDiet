@@ -1,0 +1,24 @@
+{
+  "name": "90percentdiet",
+  "version": "1.0.0",
+  "description": "Calculate TDEE, offer nutrition and exercise recommendation.",
+  "main": "90percent.js",
+  "dependencies": {
+    "express": "^4.15.4",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattlgroff/90PercentDiet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattlgroff/90PercentDiet/issues"
+  },
+  "homepage": "https://github.com/mattlgroff/90PercentDiet#readme"
+}
