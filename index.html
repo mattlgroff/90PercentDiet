@@ -21,12 +21,14 @@
   </head>
 
   <body>
-
+    <!-- TDEE Calculator Form -->
     <div class = "panel panel-primary">
       <div class = "panel-heading">TDEE Calculator</div>
       <div class = "panel-body">
+
         <form class ="form">
 
+        <!-- Dropdown for user gender -->
         <label for = "user-gender">Gender</label>
         <select class = "form-inline">
             <option></option>
@@ -35,26 +37,30 @@
           </select>
           <br/>
         
-
+        <!-- Input for user height -->
         <label for = "user-height">Height: </label>
         <input type = "number" id = "user-height">
         <br/>
-
+        
+        <!-- Input for user weight -->
         <label for = "user-weight">Weight: </label>
         <input type = "number" id = "user-weight">
         <br/>
 
+        <!-- Input for user age -->
         <label for = "user-age">Age:   </label>
         <input type = "number" id = "user-age">
         <br/>
         <br/>
-
+        
+        <!-- Form submit button -->
         <input type = "submit" id = "form-submit" value = "Submit" class = "btn btn-primary">
 
         </form>
        </div>
      </div>
-
+    
+     <!-- User result will appear here -->
      <div id = "user-result"></div>
     
 
