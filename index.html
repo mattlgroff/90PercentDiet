@@ -22,6 +22,43 @@
 
   <body>
 
+    <div class = "panel panel-primary">
+      <div class = "panel-heading">TDEE Calculator</div>
+      <div class = "panel-body">
+        <form class ="form">
+
+        <label for = "user-gender">Gender</label>
+        <select class = "form-inline">
+            <option></option>
+            <option id = "user-male">Male</option>
+            <option id = "user-female">Female</option>
+          </select>
+          <br/>
+        
+
+        <label for = "user-height">Height: </label>
+        <input type = "number" id = "user-height">
+        <br/>
+
+        <label for = "user-weight">Weight: </label>
+        <input type = "number" id = "user-weight">
+        <br/>
+
+        <label for = "user-age">Age:   </label>
+        <input type = "number" id = "user-age">
+        <br/>
+        <br/>
+
+        <input type = "submit" id = "form-submit" value = "Submit" class = "btn btn-primary">
+
+        </form>
+       </div>
+     </div>
+
+     <div id = "user-result"></div>
+    
+
+
   </body>
 
 </html>
