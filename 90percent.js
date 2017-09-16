@@ -12,28 +12,28 @@ app.listen(port, function() {
 
 //USDA Info
 var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
-ndbno = "01009",
-usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
-usdaAuth = {
-        method: 'get',
-        qs: {
-        	'api_key': usdaApiKey,
-        	'type': "b",
-        	'format': "json",
-        	'ndbno': ndbno
-        },
-        url: usdaUrl
-    };    
+  ndbno = "01009",
+  usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
+  usdaAuth = {
+          method: 'get',
+          qs: {
+          	'api_key': usdaApiKey,
+          	'type': "b",
+          	'format': "json",
+          	'ndbno': ndbno
+          },
+          url: usdaUrl
+      };    
 
 //Calling our apiRequest and console.log the body
 apiRequest(usdaAuth);      
 
 function apiRequest(auth){
 	request(auth, function(err, res, body){   //Beginning of request
-		console.log(body);
+		var body = JSON.parse(body);
+    console.log(body.report.food.name);
+    // console.log(body.report.food.nutrients[1].name);
 
-	        
-	        
 	});  //End of Request
 }
 
