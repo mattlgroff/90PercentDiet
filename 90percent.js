@@ -3,9 +3,6 @@ const request = require('request');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-var resultsArray = [];
-var calories = 0;
-
 //Express
 var app = express();
 var port = process.env.PORT || 8080; // process.env.PORT lets the port be set by Heroku
@@ -22,25 +19,24 @@ app.post('/send', function(request, response){
 
   //Take user input from the Ajax Post Request from the search box
   var searchTerm = request.body.content;
-  // var searchTerm = "asparagus raw";
 
   //Send it to our Search USDA Api 
-  //searchUsdaApi(searchTerm);
-  searchUsdaApi(searchTerm);
+  console.log( searchUsdaApi(searchTerm) );
+  // searchUsdaApi(searchTerm).then(function(data){
+  //   console.log("searchTermdata: " + data);
 
-  console.log("Sending: " + resultsArray);
+  //   response.json({
+  //     content: data
+  //   });
+  // })
 
-  //Our Response
-  response.json({
-      content: resultsArray
-    });
 
 });
 
 
 function searchUsdaApi(searchTerm){
   var query = searchTerm;
-  var results = 10;
+  var results = 1;
   var resultsArray = [];
 
   var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
@@ -57,7 +53,40 @@ function searchUsdaApi(searchTerm){
       url: usdaSearchUrl
     };
 
-  searchApiRequest(searchUsda);
+  searchApiRequest(searchUsda).then(function(data){
+
+    console.log("Inside searchApiRequest promise");
+
+    var resultsArray = [];
+
+    for (var i = 0; i < results; i++){
+
+      var name = data.item[i].name;
+
+      usdaFoodLookup(data.item[i].ndbno).then(function(body){
+
+        console.log("Inside usdaFoodLookup promise");
+
+        var nutrient1 = body.nutrients[0].unit + " of " + body.nutrients[0].name + " in 100g: " + body.nutrients[0].value;
+        var nutrient2 = body.nutrients[1].unit + " of " + body.nutrients[1].name + " in 100g: " + body.nutrients[1].value;
+
+        resultsArray[i] = { "Name": name, "Nutrient1": nutrient1, "Nutrient2": nutrient2 };
+        console.log(resultsArray[i])
+
+      })
+      .catch(function(error){
+        console.log("Error: " + error);
+      }); //End usdaFoodLookup Promise
+      
+    }
+
+    return resultsArray;
+
+  }) //End searchRequestPromise
+
+  .catch(function(error){
+    console.log("Error: " + error);
+   });
 
 }
 
@@ -65,7 +94,6 @@ function searchUsdaApi(searchTerm){
 function usdaFoodLookup(foodNumber){
   //USDA Info
   var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
-      ndbno = "01009",
       usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
       usdaAuth = {
               method: 'get',
@@ -73,51 +101,48 @@ function usdaFoodLookup(foodNumber){
                 'api_key': usdaApiKey,
                 'type': "b",
                 'format': "json",
-                'ndbno': ndbno
+                'ndbno': foodNumber
               },
               url: usdaUrl
   };    
 
-  foodLookupApiRequest(usdaAuth);   
+  return foodLookupApiRequest(usdaAuth);   
   
 }
 
-
 function searchApiRequest(auth){
+  return new Promise(function(resolve, reject){
 
-	request(auth, function(err, res, body){   //Beginning of request
+      request(auth, function(err, res, body){
+          // in addition to parsing the value, deal with possible errors
+          if (err) return reject(err);
 
-    body = JSON.parse(body).list;
-
-    for (var i = 0; i < 5; i++){
-
-      resultsArray[i] = { "Name": body.item[i].name, "Calories": usdaFoodLookup(body.item[i].ndbno) };
-      console.log(resultsArray[i]);
-    }
-  
-    return resultsArray;
-
-	});  //End of Request
-
-  
+          try {
+              // JSON.parse() can throw an exception if not valid JSON
+              resolve(JSON.parse(body).list);
+          } catch(e) {
+              reject(e);
+          }
+      });
+  });
 }
 
 function foodLookupApiRequest(auth){
+  return new Promise(function(resolve, reject){
 
-  request(auth, function(err, res, body){   //Beginning of request
+      request(auth, function(err, res, body){
+          // in addition to parsing the value, deal with possible errors
+          if (err) return reject(err);
 
-    body = JSON.parse(body);
-
-    calories = body.report.food.nutrients[1].measures[0].label + " " + body.report.food.nutrients[1].measures[0].value;
-
-    return calories;
-
-  });  //End of Request
-
-  
-  
+          try {
+              // JSON.parse() can throw an exception if not valid JSON
+              resolve(JSON.parse(body).report.food);
+          } catch(e) {
+              reject(e);
+          }
+      });
+  });
 }
-
 
 
 
