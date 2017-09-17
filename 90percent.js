@@ -3,6 +3,9 @@ const request = require('request');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+var resultsArray = [];
+var calories = 0;
+
 //Express
 var app = express();
 var port = process.env.PORT || 8080; // process.env.PORT lets the port be set by Heroku
@@ -19,14 +22,17 @@ app.post('/send', function(request, response){
 
   //Take user input from the Ajax Post Request from the search box
   var searchTerm = request.body.content;
+  // var searchTerm = "asparagus raw";
 
   //Send it to our Search USDA Api 
   //searchUsdaApi(searchTerm);
+  searchUsdaApi(searchTerm);
+
+  console.log("Sending: " + resultsArray);
 
   //Our Response
-  response.json
-    ({
-      content: searchUsdaApi(searchTerm)
+  response.json({
+      content: resultsArray
     });
 
 });
@@ -51,17 +57,8 @@ function searchUsdaApi(searchTerm){
       url: usdaSearchUrl
     };
 
-  var body = apiRequest(searchUsda);
+  searchApiRequest(searchUsda);
 
-  console.log(body);
-
-  // for (var i = 0; i < results; i++){
-  //   resultsArray[i] = { "Name": body.list.item[i].name, "NDBNO": body.list.item[i].ndbno };
-  //   console.log(resultsArray[i]);
-  // }
-
-  // return resultsArray;
-  
 }
 
 
@@ -81,20 +78,44 @@ function usdaFoodLookup(foodNumber){
               url: usdaUrl
   };    
 
-  var body = apiRequest(usdaAuth);   
-
-  console.log(body.report.food.name);
-
-  console.log(body.report.food.nutrients[1].value);
+  foodLookupApiRequest(usdaAuth);   
+  
 }
 
 
-function apiRequest(auth){
+function searchApiRequest(auth){
+
 	request(auth, function(err, res, body){   //Beginning of request
-    
-    return body;
+
+    body = JSON.parse(body).list;
+
+    for (var i = 0; i < 5; i++){
+
+      resultsArray[i] = { "Name": body.item[i].name, "Calories": usdaFoodLookup(body.item[i].ndbno) };
+      console.log(resultsArray[i]);
+    }
+  
+    return resultsArray;
 
 	});  //End of Request
+
+  
+}
+
+function foodLookupApiRequest(auth){
+
+  request(auth, function(err, res, body){   //Beginning of request
+
+    body = JSON.parse(body);
+
+    calories = body.report.food.nutrients[1].measures[0].label + " " + body.report.food.nutrients[1].measures[0].value;
+
+    return calories;
+
+  });  //End of Request
+
+  
+  
 }
 
 
