@@ -1,11 +1,6 @@
-//Converts weigth in pounds to kilograms
+//Converts weight in pounds to kilograms
 var imperialToMetricConverter_Weight = function(weightInPounds) {
 	return weightInPounds * 0.45359237;
-};
-
-//Converts weigth in kilogarms to pounds
-var metricToImperialConverter_Weight = function(weightInKilograms) {
-	return weightInKilograms * 2.20462262185;
 };
 
 //Calculates full height in total inches
@@ -14,12 +9,12 @@ var totalInches_Height = function (feet, inches) {
 };
 
 //Converts height in inches to cm
- var metricToImperialConverter_Height = function(heightInInches) {
+ var imperialToMetric_Converter_Height = function(heightInInches) {
  	return heightInInches * 2.54;
  };
 
 //Calculates Basal Metbaolic Rate
-var BMRCalulcator = function (gender, weight, height, age) {
+var BMRCalulcator = function (gender, height, weight, age) {
 	if (gender === 'female'){
 		return 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
 	}
@@ -48,7 +43,10 @@ var activityFactor = function (activityLevel) {
 };
 
 //Calculates TDEE with activity factor and BMR
-var tdeeFactor = function(gender, height, weight, age, activityLevel) {
+var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
+	//TDEE = BMR * Activity Factor
+	var tdeeReccomendation = (BMRCalulcator(gender, height, weight, age)) * (activityFactor(activityLevel));
+	return parseInt(tdeeReccomendation.toFixed(0));
 
 };
 
@@ -56,17 +54,185 @@ $(document).ready(function(){
 
 
 	$("#form-submit").on("click", function(){
-		if (true){//Imperial is checked
-			event.preventDefault();
-			var gender = $(".form-inline option:selected").val().trim();
-			var height_feet = ;
-			var height_inches = ;
-			var weight = pasrseInt($("#user-weight").val().trim());
-			var activityLevel = 
-		}
-		else {
+		event.preventDefault();
+		var isImperialChecked = false;
+		var gender = $("#gender-option option:selected").val().trim().toLowerCase();
+		var weight = parseInt($("#user-weight").val().trim());
+		var age = parseInt($("#user-age").val().trim());
+		var activityLevel = $("#activity-option option:selected").attr("id").toLowerCase();
+		console.log(gender , weight , age , activityLevel);
+		var tdeeRec = 0;
+
+		if (isImperialChecked){//Imperial is checked
+			var height_feet = 6;
+			var height_inches =4;
+			var height = totalInches_Height(height_feet, height_inches);
+			height = imperialToMetric_Converter_Height(height);
+			weight = imperialToMetricConverter_Weight(weight);
+			var activityLevel = "moderately_active";
+			tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
 
 		}
+		else {
+			var height = parseInt($("#user-height").val().trim());
+			console.log(height);
+			tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
+		}
+
+		$("<div>")
+			.attr("id" , "generated_result")
+			.html("Your recommended TDEE to maintain your current weight is: " + tdeeRec + " calories per day!")
+			.addClass("panel-body")
+			.appendTo("#user-result");
+
+		$("<table>")
+			.attr("id" , "weight_maintenance_options")
+			.addClass("table")
+			.addClass("table-bordered")
+			.addClass("table-hover")
+			.append(
+				$("<thead>")
+					.append(
+						$("<tr>")
+							.addClass("text-center")
+							.append(
+								$("<th>")
+									.html("Weight +/- per week")
+							)
+							.append(
+								$("<th>")
+									.html("Calorie intake per day")
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("2 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec + 1000)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("1.5 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec + 750)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("1 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec + 500)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html(".5 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec + 250)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("0 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("- .5 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec - 250)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("- 1 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec - 500)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("- 1.5 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec - 750)
+							)
+					)
+			)
+			.append(
+				$("<tbody>")
+					.append(
+						$("<tr>")
+							.append(
+								$("<th>")
+									.html("- 2 LB")
+							)
+							.append(
+								$("<th>")
+									.html(tdeeRec - 1000)
+							)
+					)
+			)
+			.appendTo("#user-result");
+
 	});
 
 });
