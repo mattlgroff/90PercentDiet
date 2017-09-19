@@ -93,19 +93,19 @@ app.listen(port, function() {
 // }
 
 // function usdaFoodLookup(foodNumber){
-//   //USDA Info
-//   var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
-//       usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
-//       usdaAuth = {
-//               method: 'get',
-//               qs: {
-//                 'api_key': usdaApiKey,
-//                 'type': "b",
-//                 'format': "json",
-//                 'ndbno': foodNumber
-//               },
-//               url: usdaUrl
-//   };    
+  // //USDA Info
+  // var usdaApiKey = "iBklKDIgJEc6JVRhYE3OX7AvpEChxD1953KbPgSl",
+  //     usdaUrl = "https://api.nal.usda.gov/ndb/reports/",
+  //     usdaAuth = {
+  //             method: 'get',
+  //             qs: {
+  //               'api_key': usdaApiKey,
+  //               'type': "b",
+  //               'format': "json",
+  //               'ndbno': foodNumber
+  //             },
+  //             url: usdaUrl
+  // };    
 
 //   return foodLookupApiRequest(usdaAuth);   
   
