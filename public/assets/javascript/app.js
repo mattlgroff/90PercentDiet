@@ -41,20 +41,20 @@
 // 
 $(document).ready(function(){
 
-$("#user-heightMetric").hide();
-
-$("#metric").on("click", function(){
-	$("#feet-imperial").hide();
-	$("#inches-imperial").hide();
-	$("#user-heightMetric").show();
-
-});
-
-
-$("#imperial").on("click", function(){
 	$("#user-heightMetric").hide();
-	$("#feet-imperial").show();
-	$("#inches-imperial").show();
-});
+
+	$("#metric").on("click", function(){
+		$("#feet-imperial").hide();
+		$("#inches-imperial").hide();
+		$("#user-heightMetric").show();
+
+	});
+
+
+	$("#imperial").on("click", function(){
+		$("#user-heightMetric").hide();
+		$("#feet-imperial").show();
+		$("#inches-imperial").show();
+	});
 
 });
