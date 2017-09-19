@@ -6,6 +6,7 @@
     <!-- Favicon -->
     <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon" />
 
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     
@@ -27,6 +28,12 @@
       <div class = "panel-body">
 
         <form class ="form">
+        
+        <!--Radio Buttons for format -->
+        <label class = "radio-inline"><input type = "radio" id = "imperial" name = "radAnswer" checked= "checked">Imperial (U.S)</label>
+        <label class = "radio-inline"><input type = "radio" id = "metric" name = "radAnswer">Metric</label>
+        <br/>
+      
 
         <!-- Dropdown for user gender -->
         <label for = "user-gender">Gender</label>
@@ -37,9 +44,41 @@
           </select>
           <br/>
         
-        <!-- Input for user height -->
+        <!-- Input for user metric height -->
         <label for = "user-height">Height: </label>
-        <input type = "number" id = "user-height">
+        <input type = "number" id = "user-heightMetric">
+
+        <!-- Input for user imperial height -->
+        <div id = "feet-imperial">  
+        <label for = "feet-heightImperial">ft</label>
+        <select id = "feet-heightImperial">
+          <option></option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+        </select>
+      </div>
+        
+        <div id = "inches-imperial">
+        <label for = "inches-heightImperial">in</label>
+        <select id = "inches-heightImperial">
+          <option></option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+          <option>11</option>
+        </select>
+      </div>
         <br/>
         
         <!-- Input for user weight -->
