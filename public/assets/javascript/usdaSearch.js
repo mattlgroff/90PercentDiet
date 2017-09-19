@@ -103,27 +103,27 @@ function numberAjaxRequest(url,qs,number){
           var nutrientsArr = response.report.food.nutrients;
 
           nutrientsArr.forEach(function callback(currentValue, index, array) {
-            if (nutrientsArr[index].name === "Energy"){
+            if (nutrientsArr[index].name.includes("Energy") ){
               $("#calories").text(nutrientsArr[index].value + " kcal");
             }
 
-            if (nutrientsArr[index].name === "Protein"){
+            if (nutrientsArr[index].name.includes("Protein") ){
               $("#protein").text(nutrientsArr[index].value + " g");
             }
 
-            if (nutrientsArr[index].name === "Carbohydrate, by difference"){
+            if (nutrientsArr[index].name.includes("Carbohydrate") ){
               $("#carbs").text(nutrientsArr[index].value + " g");
             }
 
-            if (nutrientsArr[index].name === "Sugars, total"){
+            if (nutrientsArr[index].name.includes("Sugars") ){
               $("#sugars").text(nutrientsArr[index].value + " g");
             }
 
-            if (nutrientsArr[index].name === "Total lipid (fat)"){
+            if (nutrientsArr[index].name.includes("Total lipid") ){
               $("#fat").text(nutrientsArr[index].value + " g");
             }
 
-            if (nutrientsArr[index].name === "Fiber, total dietary"){
+            if (nutrientsArr[index].name.includes("Fiber") ){
               $("#fiber").text(nutrientsArr[index].value + " g");
             }
 
