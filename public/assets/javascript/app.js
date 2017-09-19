@@ -47,6 +47,7 @@ $(document).ready(function(){
 		$("#feet-imperial").hide();
 		$("#inches-imperial").hide();
 		$("#user-heightMetric").show();
+		
 
 	});
 

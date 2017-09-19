@@ -1,5 +1,6 @@
 //Converts weight in pounds to kilograms
 var imperialToMetricConverter_Weight = function(weightInPounds) {
+	console.log(weightInPounds * 0.45359237);
 	return weightInPounds * 0.45359237;
 };
 
@@ -10,6 +11,7 @@ var totalInches_Height = function (feet, inches) {
 
 //Converts height in inches to cm
  var imperialToMetric_Converter_Height = function(heightInInches) {
+ 	console.log(heightInInches * 2.54);
  	return heightInInches * 2.54;
  };
 
@@ -55,7 +57,7 @@ $(document).ready(function(){
 
 	$("#form-submit").on("click", function(){
 		event.preventDefault();
-		var isImperialChecked = false;
+		var isImperialChecked = $("#imperial:checked").val();
 		var gender = $("#gender-option option:selected").val().trim().toLowerCase();
 		var weight = parseInt($("#user-weight").val().trim());
 		var age = parseInt($("#user-age").val().trim());
@@ -64,8 +66,9 @@ $(document).ready(function(){
 		var tdeeRec = 0;
 
 		if (isImperialChecked){//Imperial is checked
-			var height_feet = 6;
-			var height_inches =4;
+			console.log("Imperial is checked");
+			var height_feet = parseInt($("#feet-heightImperial option:selected").val().trim());
+			var height_inches = parseInt($("#inches-heightImperial option:selected").val().trim());
 			var height = totalInches_Height(height_feet, height_inches);
 			height = imperialToMetric_Converter_Height(height);
 			weight = imperialToMetricConverter_Weight(weight);
@@ -74,8 +77,8 @@ $(document).ready(function(){
 
 		}
 		else {
-			var height = parseInt($("#user-height").val().trim());
-			console.log(height);
+			console.log("Metric is checked");
+			var height = parseInt($("#user-heightMetric").val().trim());
 			tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
 		}
 
