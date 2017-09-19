@@ -56,6 +56,7 @@ $(document).ready(function(){
 
 
 	$("#form-submit").on("click", function(){
+		$("#user-result").empty();
 		event.preventDefault();
 		var isImperialChecked = $("#imperial:checked").val();
 		var gender = $("#gender-option option:selected").val().trim().toLowerCase();
