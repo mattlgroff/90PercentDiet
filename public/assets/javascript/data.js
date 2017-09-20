@@ -96,10 +96,12 @@ function displayGenderHighchart(percentMale,percentFemale){
                 colorByPoint: true,
                 data: [{
                     name: 'Male',
+                    color: 'rgba(119, 152, 191, .5)',
                     y: percentMale
                 },  
                 {
                     name: 'Female',
+                    color: 'rgba(223, 83, 83, .5)',
                     y: percentFemale
                 }]
             }]
