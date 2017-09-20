@@ -104,6 +104,7 @@ $(document).ready(function(){
 		$("#user-heightMetric").show();
 		$("#weight-lbl").html("kg");
 		$("#height-lbl").html("cm");
+		$("#height-lbl").show();
 	});
 
 	//Show Imperial on Click
@@ -112,6 +113,7 @@ $(document).ready(function(){
 		$("#feet-imperial").show();
 		$("#inches-imperial").show();
 		$("#weight-lbl").html("lbs");
+		$("#height-lbl").hide();
 	});
 
 	//Submit form on click
