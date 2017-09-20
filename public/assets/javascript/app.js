@@ -1,14 +1,16 @@
 //Firebase
 var config = {
-        apiKey: "AIzaSyDLRMhBc5n3Zlm4dBqg6BRIY-C64oCboSk",
-        authDomain: "project90percent.firebaseapp.com",
-        databaseURL: "https://project90percent.firebaseio.com",
-        projectId: "project90percent",
-        storageBucket: "",
-        messagingSenderId: "995661683537"
-      };
+    apiKey: "AIzaSyDLRMhBc5n3Zlm4dBqg6BRIY-C64oCboSk",
+    authDomain: "project90percent.firebaseapp.com",
+    databaseURL: "https://project90percent.firebaseio.com",
+    projectId: "project90percent",
+    storageBucket: "project90percent.appspot.com",
+    messagingSenderId: "995661683537"
+  };
 
 firebase.initializeApp(config);
+
+var database = firebase.database();
 
 //Converts weight in pounds to kilograms
 var imperialToMetricConverter_Weight = function(weightInPounds) {
@@ -34,7 +36,7 @@ var BMRCalulcator = function (gender, height, weight, age) {
 	if (gender === 'female'){
 		return 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
 	}
-	else if (gender === 'male') {
+	else if (gender === 'male') {	
 		return 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
 	}
 };
@@ -67,6 +69,23 @@ var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
 	console.log("Weight: " + weight);
 	console.log("Age: " + age);
 	console.log("Activity Level: " + activityLevel);
+
+	if(gender === "male"){
+		var firebaseRef = database.ref("/male");
+	}
+	else if(gender === "female"){
+		var firebaseRef = database.ref("/female");
+	}
+
+	//Sending to Firebase
+	firebaseRef.push({
+			'Height(cm)': height,
+			'Weight(kg)': weight, 
+			'Age': age,
+			'ActivityLevel': activityLevel,
+			'dateAdded': firebase.database.ServerValue.TIMESTAMP
+	});		
+
 	var tdeeReccomendation = (BMRCalulcator(gender, height, weight, age)) * (activityFactor(activityLevel));
 	return parseInt(tdeeReccomendation.toFixed(0));
 
