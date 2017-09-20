@@ -62,14 +62,6 @@ var activityFactor = function (activityLevel) {
 
 //Calculates TDEE with activity factor and BMR
 var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
-	//TDEE = BMR * Activity Factor
-	console.log("TDEE Calculator Double Checking: ");
-	console.log("Gender: " + gender);
-	console.log("Height: " + height);
-	console.log("Weight: " + weight);
-	console.log("Age: " + age);
-	console.log("Activity Level: " + activityLevel);
-
 	if(gender === "male"){
 		var firebaseRef = database.ref("/male");
 	}
@@ -79,8 +71,8 @@ var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
 
 	//Sending to Firebase
 	firebaseRef.push({
-			'Height(cm)': height,
-			'Weight(kg)': weight, 
+			'Height(cm)': Math.round(height),
+			'Weight(kg)': Math.round(weight), 
 			'Age': age,
 			'ActivityLevel': activityLevel,
 			'dateAdded': firebase.database.ServerValue.TIMESTAMP
