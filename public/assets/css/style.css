@@ -1,3 +1,7 @@
-.measure{
-	float: right;
+.imperial-height-display{
+	display: inline-block;
+}
+
+.label-space{
+	margin-left: 5px;
 }

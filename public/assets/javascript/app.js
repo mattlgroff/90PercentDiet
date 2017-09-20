@@ -95,12 +95,15 @@ $(document).ready(function(){
 
 	//Hide Metric on load
 	$("#user-heightMetric").hide();
+	$("#weight-lbl").html("lbs");
 
 	//Show Metric on Click
 	$("#metric").on("click", function(){
 		$("#feet-imperial").hide();
 		$("#inches-imperial").hide();
 		$("#user-heightMetric").show();
+		$("#weight-lbl").html("kg");
+		$("#height-lbl").html("cm");
 	});
 
 	//Show Imperial on Click
@@ -108,6 +111,7 @@ $(document).ready(function(){
 		$("#user-heightMetric").hide();
 		$("#feet-imperial").show();
 		$("#inches-imperial").show();
+		$("#weight-lbl").html("lbs");
 	});
 
 	//Submit form on click
