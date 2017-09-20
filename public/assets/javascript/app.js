@@ -146,6 +146,7 @@ $(document).ready(function(){
 			.addClass("table")
 			.addClass("table-bordered")
 			.addClass("table-hover")
+			.addClass("table-css")
 			.append(
 				$("<thead>")
 					.append(
