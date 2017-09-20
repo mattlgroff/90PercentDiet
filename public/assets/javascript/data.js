@@ -30,16 +30,15 @@ $(document).ready(function(){
       var percentFemale = (female / totalUsers) * 100;
       var percentMale = (male / totalUsers) * 100;
 
-      displayHighchart(percentMale,percentFemale);
+      displayGenderHighchart(percentMale,percentFemale);
     });
 
 
 });
 
-
-function displayHighchart(percentMale,percentFemale){
+function displayGenderHighchart(percentMale,percentFemale){
         //Highcharts
-        Highcharts.chart('container', {
+        Highcharts.chart('genderChart', {
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
