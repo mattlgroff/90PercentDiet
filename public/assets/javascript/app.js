@@ -134,6 +134,7 @@ $(document).ready(function(){
 		if(isImperialChecked){
 			var height_feet = parseInt($("#feet-heightImperial option:selected").val().trim());
 			var height_inches = parseInt($("#inches-heightImperial option:selected").val().trim());
+			var errorCheckWeight = weight;
 			height = imperialToMetric_Converter_Height(totalInches_Height(height_feet, height_inches));
 			weight = imperialToMetricConverter_Weight(weight);
 
@@ -143,13 +144,28 @@ $(document).ready(function(){
 		}
 
 
-		if (formErrorCheck(weight) || formErrorCheck(age) || formErrorCheck(height)){
+		if (formErrorCheck(errorCheckWeight)){
+			console.log("Weight Error:" + errorCheckWeight)
 			$("#tdCalcErrorDiv").empty();
 			$("#tdCalcErrorDiv").append($("<div>")
 								.addClass("warning text-center")
-								.html("Please check your input!"));
+								.html("Invalid input. Please enter a valid weight."));
 
+		} else if (formErrorCheck(age)){
+			console.log("Age Error:" + age)
+			$("#tdCalcErrorDiv").empty();
+			$("#tdCalcErrorDiv").append($("<div>")
+								.addClass("warning text-center")
+								.html("Invalid input. Please enter a valid age."));
+
+		} else if (formErrorCheck(height)){
+			console.log("Height Error:" + height)
+			$("#tdCalcErrorDiv").empty();
+			$("#tdCalcErrorDiv").append($("<div>")
+								.addClass("warning text-center")
+								.html("Invalid input. Please enter a valid height."));
 		}
+
 		else {
 			$("#tdCalcErrorDiv").empty();
 			if (isImperialChecked){//Imperial is checked
