@@ -84,3 +84,7 @@ h6 {
 .centered {
 	text-align: center;
 }
+
+.post-header {
+	font-size: 48;
+}
