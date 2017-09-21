@@ -1,16 +1,20 @@
-.imperial-height-display{
+.imperial-height-display {
 	display: inline-block;
 }
 
-.label-space{
+.label-space {
 	margin-left: 5px;
 }
 
-.table-css{
+.table-css {
 
 }
 
-.profile-pic{
+#warning {
+	color: red;
+}
+
+/*.profile-pic{
 	display: block;
 	float:left;
 	max-height: 200px;
@@ -19,4 +23,5 @@
 	padding-right: 20px;
 	padding-top: 20px;
 	padding-bottom: 20px;
-}
+}*/
+
