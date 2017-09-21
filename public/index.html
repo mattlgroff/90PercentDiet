@@ -55,7 +55,7 @@
         <h3>Our motto: Weight management is 90% Food and 10% Exercise.</h3>
         <p>This website was made with a passion for making people's lives better. If we can help just one person with their weight management than we have been a great success! </p>
 
-        <p><strong id="warning">Never start a diet without consulting a Doctor or Nutritionist.</strong></p>
+        <p><strong class="warning">Never start a diet without consulting a Doctor or Nutritionist.</strong></p>
 
         <p>Tracking caloric intake is easy when you use smartphone app's such as <a href="https://loseit.com" target="_blank">Lose It</a> or <a href="https://myfitnesspal.com" target="_blank">MyFitnessPal</a>. Let us be your resource for getting started! Below is a TDEE Calculator. What it does is estimate how much food you can eat per day to lose (or gain or maintain) X amount of pounds per week!</p>
 
@@ -67,91 +67,97 @@
 
     <!-- TDEE Calculator Form -->
     <div class = "row">
-      <div class = "col-lg-12">
-    <div class = "panel panel-primary">
+      <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class = "panel panel-primary">
       <div class = "panel-heading">TDEE Calculator</div>
-      <div class = "panel-body">
-
-        <form class ="form">
+      <div class = "panel-body row">
+        <div class = "col-lg-6 col-md-6 col-sm-6 col-xs-6">
+  
+          <form class ="form">
+          
+          <!--Radio Buttons for format -->
+          <label class = "radio-inline"><input type = "radio" id = "imperial" name = "radAnswer" checked= "checked">Imperial (U.S)</label>
+          <label class = "radio-inline"><input type = "radio" id = "metric" name = "radAnswer">Metric</label>
+          <br/>
         
-        <!--Radio Buttons for format -->
-        <label class = "radio-inline"><input type = "radio" id = "imperial" name = "radAnswer" checked= "checked">Imperial (U.S)</label>
-        <label class = "radio-inline"><input type = "radio" id = "metric" name = "radAnswer">Metric</label>
-        <br/>
-      
 
-        <!-- Dropdown for user gender -->
-        <label for = "user-gender">Gender</label>
-        <select class = "form-inline" id="gender-option">
-            <option id = "user-male">Male</option>
-            <option id = "user-female">Female</option>
+          <!-- Dropdown for user gender -->
+          <label for = "user-gender">Gender</label>
+          <select class = "form-inline" id="gender-option">
+              <option id = "user-male">Male</option>
+              <option id = "user-female">Female</option>
+            </select>
+            <br/>
+          
+          <!-- Input for user metric height -->
+          <label for = "user-height">Height: </label>
+          <input type = "number" id = "user-heightMetric" min=1><strong><span class="label-space" id="height-lbl"></span></strong>
+
+          <!-- Input for user imperial height -->
+          <div id = "feet-imperial" class= "imperial-height-display">  
+          <select id = "feet-heightImperial">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
           </select>
-          <br/>
-        
-        <!-- Input for user metric height -->
-        <label for = "user-height">Height: </label>
-        <input type = "number" id = "user-heightMetric" min=1><strong><span class="label-space" id="height-lbl"></span></strong>
-
-        <!-- Input for user imperial height -->
-        <div id = "feet-imperial" class= "imperial-height-display">  
-        <select id = "feet-heightImperial">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
-        </select>
-        <label for = "feet-heightImperial">ft</label>
-      </div>
-        
-        <div id = "inches-imperial" class="imperial-height-display">
-        <select id = "inches-heightImperial">
-          <option>0</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
-          <option>8</option>
-          <option>9</option>
-          <option>10</option>
-          <option>11</option>
-        </select>
-        <label for = "inches-heightImperial">in</label>
-      </div>
-
-        <br/>
-        
-        <!-- Input for user weight -->
-        <label for = "user-weight">Weight: </label>
-        <input type = "number" id = "user-weight" min=1><strong><span class="label-space" id="weight-lbl"></span></strong>
-        <br/>
-
-        <!-- Input for user age -->
-        <label for = "user-age">Age:   </label>
-        <input type = "number" id = "user-age" min=1>
-        <br/>
-        
-        <!-- Input for user activity -->
-        <label for = "user-activity">Activity Level: </label>
-        <select class = "form-inline" id="activity-option">
-            <option id = "sedentary">Sedentary</option>
-            <option id = "lightly_active">Lightly Active</option>
-            <option id = "moderately_active">Moderatly Active</option>
-            <option id = "very_active">Very Active</option>
-            <option id = "extremely_active">Extremely Active</option>
+          <label for = "feet-heightImperial">ft</label>
+        </div>
+          
+          <div id = "inches-imperial" class="imperial-height-display">
+          <select id = "inches-heightImperial">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
           </select>
-          <br/>
-          <br/>
-        
-        <!-- Form submit button -->
-        <input type = "submit" id = "form-submit" value = "Submit" class = "btn btn-primary">
+          <label for = "inches-heightImperial">in</label>
+        </div>
 
-        </form>
+          <br/>
+          
+          <!-- Input for user weight -->
+          <label for = "user-weight">Weight: </label>
+          <input type = "number" id = "user-weight" min=1><strong><span class="label-space" id="weight-lbl"></span></strong>
+          <br/>
+
+          <!-- Input for user age -->
+          <label for = "user-age">Age:   </label>
+          <input type = "number" id = "user-age" min=1>
+          <br/>
+          
+          <!-- Input for user activity -->
+          <label for = "user-activity">Activity Level: </label>
+          <select class = "form-inline" id="activity-option">
+              <option id = "sedentary">Sedentary</option>
+              <option id = "lightly_active">Lightly Active</option>
+              <option id = "moderately_active">Moderatly Active</option>
+              <option id = "very_active">Very Active</option>
+              <option id = "extremely_active">Extremely Active</option>
+            </select>
+            <br/>
+            <br/>
+          
+          <!-- Form submit button -->
+          <input type = "submit" id = "form-submit" value = "Submit" class = "btn btn-primary">
+
+          </form>
+        </div>
+        <div class= "col-lg-6 col-md-6 col-sm-6 col-xs-6" id="tdCalcErrorDiv">
+
+          
+        </div>
        </div>
      </div>
     

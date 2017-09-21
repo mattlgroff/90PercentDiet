@@ -10,9 +10,11 @@
 
 }
 
-#warning {
+.warning {
 	color: red;
+	font-weight: bold;
 }
+
 
 /*.profile-pic{
 	display: block;
