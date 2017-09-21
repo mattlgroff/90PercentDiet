@@ -34,29 +34,83 @@ $(document).ready(function(){
       displayGenderHighchart(percentMale,percentFemale);
 
       //Scatter Plot
+
       var maleArray = [];
+
+      var maleArray18under = [];
+      var maleArray18_30 = [];
+      var maleArray31_50 = [];
+      var maleArray51_65 =[];
+      var maleArray65plus = [];
+
+
       database.ref("/male").orderByChild("dateAdded").on("value", function(snapshot) {
 
         $.each(snapshot.val(), function(index, value) {
             var x = value['Height(cm)'];
             var y = value['Weight(kg)'];
             maleArray.push([x,y]);
+            var z = parseInt(value['Age']);
+            if (z < 18) {
+              maleArray18under.push(z);
+            }
+            else if (z >= 18 && z <= 30){
+              maleArray18_30.push(z);
+            }
+            else if (z >= 31 && z <= 50){
+              maleArray31_50.push(z);
+            }
+            else if (z >= 51 && z <= 65){
+              maleArray51_65.push(z);
+            }
+            else {
+              maleArray65plus.push(z);
+            }
+
         }); 
 
       }); //End Male Ref
 
       var femaleArray = [];
+
+      var femaleArray18under = [];
+      var femaleArray18_30 = [];
+      var femaleArray31_50 = [];
+      var femaleArray51_65 =[];
+      var femaleArray65plus = [];
+
+
       database.ref("/female").orderByChild("dateAdded").on("value", function(snapshot) {
 
         $.each(snapshot.val(), function(index, value) {
             var x = value['Height(cm)'];
             var y = value['Weight(kg)'];
             femaleArray.push([x,y]);
+            var z = parseInt(value['Age']);
+            if (z < 18){
+              femaleArray18under.push(z);
+            }
+            else if (z >= 18 && z <= 30){
+              femaleArray18_30.push(z);
+            }
+            else if (z >= 31 && z <= 50){
+              femaleArray31_50.push(z);
+            }
+            else if (z >= 51 && z <= 65){
+              femaleArray51_65.push(z);
+            }
+            else {
+              femaleArray65plus.push(z);
+            }
         }); 
 
       }); //End Female Ref
 
+
+
       displayScatterplot(maleArray,femaleArray);
+
+      displayAgeHighchart(parseInt(maleArray18under.length + femaleArray18under), parseInt(maleArray18_30 + femaleArray18_30), parseInt(maleArray31_50 + femaleArray31_50), parseInt(maleArray51_65 + femaleArray51_65), parseInt(maleArray65plus + femaleArray65plus));
 
     });
 
@@ -178,7 +232,68 @@ function displayScatterplot(maleArray, femaleArray){
           color: 'rgba(119, 152, 191, .5)',
           data: maleArray
       }]
-  });
-
-
+    });
 }
+
+function displayAgeHighchart(under18, age18_30, age31_50, age51_65, over65){
+        //Highcharts Pie Chart
+        Highcharts.chart('agePieCharts', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Age Split Between Users'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Age Groups',
+                colorByPoint: true,
+                data: [{
+                    name: 'Under 18',
+                    color: 'rgba(0, 0, 255, .5)',
+                    y: under18
+                },  
+                {
+                    name: '18 - 30',
+                    color: 'rgba(225, 0, 0, .5)',
+                    y: age18_30
+                },  
+                {
+                    name: '31 - 50',
+                    color: 'rgba(225, 225, 0, .5)',
+                    y: age31_50
+                },  
+                {
+                    name: '51 - 65',
+                    color: 'rgba(225, 0, 225, .5)',
+                    y: age51_65
+                },  
+                {
+                    name: '65 and Older',
+                    color: 'rgba(0, 255, 0, .5)',
+                    y: over65
+                }
+
+                ]
+            }]
+        });
+}
+
