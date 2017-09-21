@@ -69,6 +69,7 @@ var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
 		var firebaseRef = database.ref("/female");
 	}
 
+
 	//Sending to Firebase
 	firebaseRef.push({
 			'Height(cm)': Math.round(height),
@@ -82,6 +83,15 @@ var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
 	return parseInt(tdeeReccomendation.toFixed(0));
 
 };
+
+//Checks for invalid user entry
+var formErrorCheck = function(input){
+	if (input < 1){
+		return true;
+	} else {
+		return false;
+	}
+}
 
 $(document).ready(function(){
 
@@ -110,6 +120,7 @@ $(document).ready(function(){
 
 	//Submit form on click
 	$("#form-submit").on("click", function(){
+		
 		$("#user-result").empty();
 		event.preventDefault();
 		var isImperialChecked = $("#imperial:checked").val();
@@ -118,178 +129,191 @@ $(document).ready(function(){
 		var age = parseInt($("#user-age").val().trim());
 		var activityLevel = $("#activity-option option:selected").attr("id").toLowerCase();
 		var tdeeRec = 0;
+		var height;
 
-		if (isImperialChecked){//Imperial is checked
-			console.log("Imperial is checked");
+		if(isImperialChecked){
 			var height_feet = parseInt($("#feet-heightImperial option:selected").val().trim());
 			var height_inches = parseInt($("#inches-heightImperial option:selected").val().trim());
-			var height = totalInches_Height(height_feet, height_inches);
-			height = imperialToMetric_Converter_Height(height);
+			height = imperialToMetric_Converter_Height(totalInches_Height(height_feet, height_inches));
 			weight = imperialToMetricConverter_Weight(weight);
-			tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
 
 		}
 		else {
-			console.log("Metric is checked");
-			var height = parseInt($("#user-heightMetric").val().trim());
-			tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
+			 height = parseInt($("#user-heightMetric").val().trim());
 		}
 
-		$("<div>")
-			.attr("id" , "generated_result")
-			.html("Your recommended TDEE to maintain your current weight is: " + tdeeRec + " calories per day!")
-			.addClass("panel-body")
-			.appendTo("#user-result");
 
-		$("<table>")
-			.attr("id" , "weight_maintenance_options")
-			.addClass("table")
-			.addClass("table-bordered")
-			.addClass("table-hover")
-			.addClass("table-css")
-			.append(
-				$("<thead>")
-					.append(
-						$("<tr>")
-							.addClass("text-center")
-							.append(
-								$("<th>")
-									.html("Weight +/- per week")
-							)
-							.append(
-								$("<th>")
-									.html("Calorie intake per day")
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("2 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec + 1000)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("1.5 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec + 750)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("1 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec + 500)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html(".5 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec + 250)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("0 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("- .5 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec - 250)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("- 1 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec - 500)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("- 1.5 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec - 750)
-							)
-					)
-			)
-			.append(
-				$("<tbody>")
-					.append(
-						$("<tr>")
-							.append(
-								$("<th>")
-									.html("- 2 LB")
-							)
-							.append(
-								$("<th>")
-									.html(tdeeRec - 1000)
-							)
-					)
-			)
-			.appendTo("#user-result");
+		if (formErrorCheck(weight) || formErrorCheck(age) || formErrorCheck(height)){
+			$("#tdCalcErrorDiv").empty();
+			$("#tdCalcErrorDiv").append($("<div>")
+								.addClass("warning text-center")
+								.html("Please check your input!"));
+
+		}
+		else {
+			$("#tdCalcErrorDiv").empty();
+			if (isImperialChecked){//Imperial is checked
+				tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
+			}
+			else {
+				tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
+			}
+
+			$("<div>")
+				.attr("id" , "generated_result")
+				.html("Your recommended TDEE to maintain your current weight is: " + tdeeRec + " calories per day!")
+				.addClass("panel-body")
+				.appendTo("#user-result");
+
+			$("<table>")
+				.attr("id" , "weight_maintenance_options")
+				.addClass("table")
+				.addClass("table-bordered")
+				.addClass("table-hover")
+				.addClass("table-css")
+				.append(
+					$("<thead>")
+						.append(
+							$("<tr>")
+								.addClass("text-center")
+								.append(
+									$("<th>")
+										.html("Weight +/- per week")
+								)
+								.append(
+									$("<th>")
+										.html("Calorie intake per day")
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("2 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec + 1000)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("1.5 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec + 750)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("1 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec + 500)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html(".5 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec + 250)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("0 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("- .5 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec - 250)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("- 1 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec - 500)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("- 1.5 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec - 750)
+								)
+						)
+				)
+				.append(
+					$("<tbody>")
+						.append(
+							$("<tr>")
+								.append(
+									$("<th>")
+										.html("- 2 LB")
+								)
+								.append(
+									$("<th>")
+										.html(tdeeRec - 1000)
+								)
+						)
+				)
+				.appendTo("#user-result");
+		}
 
 	});
-
 });
