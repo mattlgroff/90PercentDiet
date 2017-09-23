@@ -12,101 +12,105 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-//Converts weight in pounds to kilograms
-var imperialToMetricConverter_Weight = function(weightInPounds) {
-	return parseInt(weightInPounds * 0.45359237);
-};
+var tdeeCalcObject = {
+	//Calculates Basal Metabolic Rate
+	BMRCalulcator: function (gender, height, weight, age) {
+		if (gender === 'female'){
+			return parseInt(655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
+		}
+		else if (gender === 'male') {	
+			return parseInt(66 + (13.7 * weight) + (5 * height) - (6.8 * age));
+		}
+	},
+	// Returns activity factor
+	activityFactor: function (activityLevel) {
+		if (activityLevel === "sedentary"){
+			return 1.2;
+		}
+		else if (activityLevel === "lightly_active"){
+			return 1.375;
+		}
+		else if (activityLevel === "moderately_active"){
+			return 1.55;
+		}
+		else if (activityLevel === "very_active"){
+			return 1.725;
+		}
+		else if (activityLevel === "extremely_active"){
+			return 1.9;
+		}
+	},
+	//Calculates TDEE with activity factor and BMR
+	tdeeCalculator: function(gender, height, weight, age, activityLevel) {
+		if(gender === "male"){
+			var firebaseRef = database.ref("/male");
+		}
+		else if(gender === "female"){
+			var firebaseRef = database.ref("/female");
+		}
+		//Sending to Firebase
+		firebaseRef.push({
+				'Height(cm)': Math.round(height),
+				'Weight(kg)': Math.round(weight), 
+				'Age': age,
+				'ActivityLevel': activityLevel,
+				'dateAdded': firebase.database.ServerValue.TIMESTAMP
+		});		
 
-//Calculates full height in total inches
-var totalInches_Height = function (feet, inches) {
-	//Must parseInt on these or we are merging strings
-	feet = parseInt(feet);
-	inches = parseInt(inches);
-	return parseInt((feet * 12) + inches);
-};
-
-//Converts height in inches to cm
- var imperialToMetric_Converter_Height = function(heightInInches) {
- 	heightInInches = parseInt(heightInInches);
- 	return parseInt(heightInInches * 2.54);
- };
-
-//Calculates Basal Metbaolic Rate
-var BMRCalulcator = function (gender, height, weight, age) {
-	if (gender === 'female'){
-		return parseInt(655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
+		var tdeeReccomendation = (tdeeCalcObject.BMRCalulcator(gender, height, weight, age)) * (tdeeCalcObject.activityFactor(activityLevel));
+		return parseInt(tdeeReccomendation.toFixed(0));
 	}
-	else if (gender === 'male') {	
-		return parseInt(66 + (13.7 * weight) + (5 * height) - (6.8 * age));
-	}
 };
 
+var conversionBetweenMetricAndImperial = {
+	//Converts weight in pounds to kilograms
+	imperialToMetricConverter_Weight: function(weightInPounds) {
+		return parseInt(weightInPounds * 0.45359237);
+	},
+	//Calculates full height in total inches
+	totalInches_Height: function (feet, inches) {
+		//Must parseInt on these or we are merging strings
+		feet = parseInt(feet);
+		inches = parseInt(inches);
+		return parseInt((feet * 12) + inches);
+	},
+	//Converts height in inches to cm
+	imperialToMetric_Converter_Height: function(heightInInches) {
+	 	heightInInches = parseInt(heightInInches);
+	 	return parseInt(heightInInches * 2.54);
+	 }
+};
 
-var appendRow = function(rowClass , weightText , calorieText){
-	return $("<tr>")
-		.addClass(rowClass)
-		.append(
-			$("<th>")
-				.html(weightText)
+var uiDOMmanipulation = {
+	//Returns a table row with option to add class, and also appends two columns to the row itself
+	appendRow: function(rowClass , weightText , calorieText){
+		return $("<tr>")
+			.addClass(rowClass)
+			.append(
+				$("<th>")
+					.html(weightText)
+				)
+			.append(
+				$("<th>")
+					.html(calorieText)
 			)
-		.append(
-			$("<th>")
-				.html(calorieText)
-		)
+
+	}
 
 };
 
-//Returns activity factor
-var activityFactor = function (activityLevel) {
-	if (activityLevel === "sedentary"){
-		return 1.2;
-	}
-	else if (activityLevel === "lightly_active"){
-		return 1.375;
-	}
-	else if (activityLevel === "moderately_active"){
-		return 1.55;
-	}
-	else if (activityLevel === "very_active"){
-		return 1.725;
-	}
-	else if (activityLevel === "extremely_active"){
-		return 1.9;
-	}
-};
-
-//Calculates TDEE with activity factor and BMR
-var tdeeCalculator = function(gender, height, weight, age, activityLevel) {
-	if(gender === "male"){
-		var firebaseRef = database.ref("/male");
-	}
-	else if(gender === "female"){
-		var firebaseRef = database.ref("/female");
-	}
-
-
-	//Sending to Firebase
-	firebaseRef.push({
-			'Height(cm)': Math.round(height),
-			'Weight(kg)': Math.round(weight), 
-			'Age': age,
-			'ActivityLevel': activityLevel,
-			'dateAdded': firebase.database.ServerValue.TIMESTAMP
-	});		
-
-	var tdeeReccomendation = (BMRCalulcator(gender, height, weight, age)) * (activityFactor(activityLevel));
-	return parseInt(tdeeReccomendation.toFixed(0));
-
-};
-
-//Checks for invalid user entry
-var formErrorCheck = function(input){
-	if (input < 1){
-		return true;
-	} else {
-		return false;
+var errorChecking = {
+	//Checks for invalid user entry
+	formErrorCheck: function(input){
+		if (input < 1){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
+
+
 
 $(document).ready(function(){
 
@@ -150,8 +154,8 @@ $(document).ready(function(){
 			var height_feet = parseInt($("#feet-heightImperial option:selected").val().trim());
 			var height_inches = parseInt($("#inches-heightImperial option:selected").val().trim());
 			var errorCheckWeight = weight;
-			height = imperialToMetric_Converter_Height(totalInches_Height(height_feet, height_inches));
-			weight = imperialToMetricConverter_Weight(weight);
+			height = conversionBetweenMetricAndImperial.imperialToMetric_Converter_Height(conversionBetweenMetricAndImperial.totalInches_Height(height_feet, height_inches));
+			weight = conversionBetweenMetricAndImperial.imperialToMetricConverter_Weight(weight);
 
 		}
 		else {
@@ -159,21 +163,21 @@ $(document).ready(function(){
 		}
 
 
-		if (formErrorCheck(weight)){
+		if (errorChecking.formErrorCheck(weight)){
 			console.log("Weight Error:" + weight)
 			$("#tdCalcErrorDiv").empty();
 			$("#tdCalcErrorDiv").append($("<div>")
 								.addClass("warning text-center")
 								.html("Invalid input. Please enter a valid weight."));
 
-		} else if (formErrorCheck(age)){
+		} else if (errorChecking.formErrorCheck(age)){
 			console.log("Age Error:" + age)
 			$("#tdCalcErrorDiv").empty();
 			$("#tdCalcErrorDiv").append($("<div>")
 								.addClass("warning text-center")
 								.html("Invalid input. Please enter a valid age."));
 
-		} else if (formErrorCheck(height)){
+		} else if (errorChecking.formErrorCheck(height)){
 			console.log("Height Error:" + height)
 			$("#tdCalcErrorDiv").empty();
 			$("#tdCalcErrorDiv").append($("<div>")
@@ -184,10 +188,10 @@ $(document).ready(function(){
 		else {
 			$("#tdCalcErrorDiv").empty();
 			if (isImperialChecked){//Imperial is checked
-				tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
+				tdeeRec = tdeeCalcObject.tdeeCalculator(gender, height, weight, age, activityLevel);
 			}
 			else {
-				tdeeRec = tdeeCalculator(gender, height, weight, age, activityLevel);
+				tdeeRec = tdeeCalcObject.tdeeCalculator(gender, height, weight, age, activityLevel);
 			}
 
 			$("<div>")
@@ -198,25 +202,22 @@ $(document).ready(function(){
 
 			$("<table>")
 				.attr("id" , "weight_maintenance_options")
-				.addClass("table")
-				.addClass("table-bordered")
-				.addClass("table-hover")
-				.addClass("table-css")
+				.addClass("table table-bordered table-hover table-css")
 				.append(
 					$("<thead>")
-						.append(appendRow("text-center", "Weight +/- per week", "Calorie intake per day"))
+						.append(uiDOMmanipulation.appendRow("text-center", "Weight +/- per week", "Calorie intake per day"))
 				)
 				.append(
 					$("<tbody>")
-						.append(appendRow("text-center", "2 LB", tdeeRec + 1000))
-						.append(appendRow("text-center", "1.5 LB", tdeeRec + 750))
-						.append(appendRow("text-center", "1 LB", tdeeRec + 500))
-						.append(appendRow("text-center", "0.5 LB", tdeeRec + 250))
-						.append(appendRow("text-center", "0 LB", tdeeRec))
-						.append(appendRow("text-center", "-0.5 LB", tdeeRec - 250))
-						.append(appendRow("text-center", "-1 LB", tdeeRec - 500))
-						.append(appendRow("text-center", "-1.5 LB", tdeeRec - 750))
-						.append(appendRow("text-center", "-2 LB", tdeeRec - 1000))
+						.append(uiDOMmanipulation.appendRow("text-center", "2 LB", tdeeRec + 1000))
+						.append(uiDOMmanipulation.appendRow("text-center", "1.5 LB", tdeeRec + 750))
+						.append(uiDOMmanipulation.appendRow("text-center", "1 LB", tdeeRec + 500))
+						.append(uiDOMmanipulation.appendRow("text-center", "0.5 LB", tdeeRec + 250))
+						.append(uiDOMmanipulation.appendRow("text-center", "0 LB", tdeeRec))
+						.append(uiDOMmanipulation.appendRow("text-center", "-0.5 LB", tdeeRec - 250))
+						.append(uiDOMmanipulation.appendRow("text-center", "-1 LB", tdeeRec - 500))
+						.append(uiDOMmanipulation.appendRow("text-center", "-1.5 LB", tdeeRec - 750))
+						.append(uiDOMmanipulation.appendRow("text-center", "-2 LB", tdeeRec - 1000))
 				)
 				.appendTo("#user-result");
 		}
