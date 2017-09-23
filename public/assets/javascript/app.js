@@ -14,7 +14,7 @@ var database = firebase.database();
 
 //Converts weight in pounds to kilograms
 var imperialToMetricConverter_Weight = function(weightInPounds) {
-	return weightInPounds * 0.45359237;
+	return parseInt(weightInPounds * 0.45359237);
 };
 
 //Calculates full height in total inches
@@ -22,22 +22,22 @@ var totalInches_Height = function (feet, inches) {
 	//Must parseInt on these or we are merging strings
 	feet = parseInt(feet);
 	inches = parseInt(inches);
-	return (feet * 12) + inches;
+	return parseInt((feet * 12) + inches);
 };
 
 //Converts height in inches to cm
  var imperialToMetric_Converter_Height = function(heightInInches) {
  	heightInInches = parseInt(heightInInches);
- 	return heightInInches * 2.54;
+ 	return parseInt(heightInInches * 2.54);
  };
 
 //Calculates Basal Metbaolic Rate
 var BMRCalulcator = function (gender, height, weight, age) {
 	if (gender === 'female'){
-		return 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
+		return parseInt(655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
 	}
 	else if (gender === 'male') {	
-		return 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
+		return parseInt(66 + (13.7 * weight) + (5 * height) - (6.8 * age));
 	}
 };
 
@@ -144,8 +144,8 @@ $(document).ready(function(){
 		}
 
 
-		if (formErrorCheck(errorCheckWeight)){
-			console.log("Weight Error:" + errorCheckWeight)
+		if (formErrorCheck(weight)){
+			console.log("Weight Error:" + weight)
 			$("#tdCalcErrorDiv").empty();
 			$("#tdCalcErrorDiv").append($("<div>")
 								.addClass("warning text-center")
