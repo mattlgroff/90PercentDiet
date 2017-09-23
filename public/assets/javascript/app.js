@@ -81,7 +81,7 @@ var conversionBetweenMetricAndImperial = {
 	 }
 };
 
-var uiDOMmanipulation = {
+var manipulationDOM = {
 	//Returns a table row with option to add class, and also appends two columns to the row itself
 	appendRow: function(rowClass , weightText , calorieText){
 		return $("<tr>")
@@ -205,19 +205,19 @@ $(document).ready(function(){
 				.addClass("table table-bordered table-hover table-css")
 				.append(
 					$("<thead>")
-						.append(uiDOMmanipulation.appendRow("text-center", "Weight +/- per week", "Calorie intake per day"))
+						.append(manipulationDOM.appendRow("text-center", "Weight +/- per week", "Calorie intake per day"))
 				)
 				.append(
 					$("<tbody>")
-						.append(uiDOMmanipulation.appendRow("text-center", "2 LB", tdeeRec + 1000))
-						.append(uiDOMmanipulation.appendRow("text-center", "1.5 LB", tdeeRec + 750))
-						.append(uiDOMmanipulation.appendRow("text-center", "1 LB", tdeeRec + 500))
-						.append(uiDOMmanipulation.appendRow("text-center", "0.5 LB", tdeeRec + 250))
-						.append(uiDOMmanipulation.appendRow("text-center", "0 LB", tdeeRec))
-						.append(uiDOMmanipulation.appendRow("text-center", "-0.5 LB", tdeeRec - 250))
-						.append(uiDOMmanipulation.appendRow("text-center", "-1 LB", tdeeRec - 500))
-						.append(uiDOMmanipulation.appendRow("text-center", "-1.5 LB", tdeeRec - 750))
-						.append(uiDOMmanipulation.appendRow("text-center", "-2 LB", tdeeRec - 1000))
+						.append(manipulationDOM.appendRow("text-center", "2 LB", tdeeRec + 1000))
+						.append(manipulationDOM.appendRow("text-center", "1.5 LB", tdeeRec + 750))
+						.append(manipulationDOM.appendRow("text-center", "1 LB", tdeeRec + 500))
+						.append(manipulationDOM.appendRow("text-center", "0.5 LB", tdeeRec + 250))
+						.append(manipulationDOM.appendRow("text-center", "0 LB", tdeeRec))
+						.append(manipulationDOM.appendRow("text-center", "-0.5 LB", tdeeRec - 250))
+						.append(manipulationDOM.appendRow("text-center", "-1 LB", tdeeRec - 500))
+						.append(manipulationDOM.appendRow("text-center", "-1.5 LB", tdeeRec - 750))
+						.append(manipulationDOM.appendRow("text-center", "-2 LB", tdeeRec - 1000))
 				)
 				.appendTo("#user-result");
 		}
