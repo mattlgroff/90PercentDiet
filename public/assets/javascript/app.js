@@ -41,6 +41,21 @@ var BMRCalulcator = function (gender, height, weight, age) {
 	}
 };
 
+
+var appendRow = function(rowClass , weightText , calorieText){
+	return $("<tr>")
+		.addClass(rowClass)
+		.append(
+			$("<th>")
+				.html(weightText)
+			)
+		.append(
+			$("<th>")
+				.html(calorieText)
+		)
+
+};
+
 //Returns activity factor
 var activityFactor = function (activityLevel) {
 	if (activityLevel === "sedentary"){
@@ -189,144 +204,19 @@ $(document).ready(function(){
 				.addClass("table-css")
 				.append(
 					$("<thead>")
-						.append(
-							$("<tr>")
-								.addClass("text-center")
-								.append(
-									$("<th>")
-										.html("Weight +/- per week")
-								)
-								.append(
-									$("<th>")
-										.html("Calorie intake per day")
-								)
-						)
+						.append(appendRow("text-center", "Weight +/- per week", "Calorie intake per day"))
 				)
 				.append(
 					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("2 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec + 1000)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("1.5 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec + 750)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("1 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec + 500)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html(".5 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec + 250)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("0 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("- .5 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec - 250)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("- 1 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec - 500)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("- 1.5 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec - 750)
-								)
-						)
-				)
-				.append(
-					$("<tbody>")
-						.append(
-							$("<tr>")
-								.append(
-									$("<th>")
-										.html("- 2 LB")
-								)
-								.append(
-									$("<th>")
-										.html(tdeeRec - 1000)
-								)
-						)
+						.append(appendRow("text-center", "2 LB", tdeeRec + 1000))
+						.append(appendRow("text-center", "1.5 LB", tdeeRec + 750))
+						.append(appendRow("text-center", "1 LB", tdeeRec + 500))
+						.append(appendRow("text-center", "0.5 LB", tdeeRec + 250))
+						.append(appendRow("text-center", "0 LB", tdeeRec))
+						.append(appendRow("text-center", "-0.5 LB", tdeeRec - 250))
+						.append(appendRow("text-center", "-1 LB", tdeeRec - 500))
+						.append(appendRow("text-center", "-1.5 LB", tdeeRec - 750))
+						.append(appendRow("text-center", "-2 LB", tdeeRec - 1000))
 				)
 				.appendTo("#user-result");
 		}
