@@ -18,6 +18,9 @@
     <!-- jQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+    <!-- Validator JS-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
     <!-- Javascript -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 
@@ -73,29 +76,35 @@
       <div class = "panel-body row">
         <div class = "col-lg-6 col-md-6 col-sm-6 col-xs-6">
   
-          <form class ="form">
+          <form data-toggle="validator" role="form">
           
           <!--Radio Buttons for format -->
-          <label class = "radio-inline"><input type = "radio" id = "imperial" name = "radAnswer" checked= "checked">Imperial (U.S)</label>
-          <label class = "radio-inline"><input type = "radio" id = "metric" name = "radAnswer">Metric</label>
-          <br/>
+          <div class="form-group">
+           <label class = "radio-inline"><input type = "radio" id = "imperial" name = "radAnswer" checked= "checked">Imperial (U.S)</label>
+           <label class = "radio-inline"><input type = "radio" id = "metric" name = "radAnswer">Metric</label>
+          </div>
         
 
           <!-- Dropdown for user gender -->
-          <label for = "user-gender">Gender</label>
-          <select class = "form-inline" id="gender-option">
+          <div class="form-group">
+          <label class="control-label" for = "user-gender">Gender:</label>
+          <select class = "form-control input-display" id="gender-option">
               <option id = "user-male">Male</option>
               <option id = "user-female">Female</option>
             </select>
-            <br/>
+          </div>
           
           <!-- Input for user metric height -->
-          <label for = "user-height">Height: </label>
-          <input type = "number" id = "user-heightMetric" min=1><strong><span class="label-space" id="height-lbl"></span></strong>
+          <div class="form-group">
+            <label class="control-label" for = "user-height">Height: </label>
+            <input class="form-control input-display" data-error="Please enter a valid height." type = "number" id = "user-heightMetric" min=1 required /><strong><span class="label-space" id="height-lbl"></span></strong>
+            <div class="help-block with-errors "></div>
+          </div>
 
           <!-- Input for user imperial height -->
-          <div id = "feet-imperial" class= "imperial-height-display">  
-          <select id = "feet-heightImperial">
+          <div class="form-group">
+            <div id = "feet-imperial" class="form-control input-display">  
+            <select  id = "feet-heightImperial">
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -107,7 +116,7 @@
           <label for = "feet-heightImperial">ft</label>
         </div>
           
-          <div id = "inches-imperial" class="imperial-height-display">
+          <div id = "inches-imperial" class="form-control input-display">
           <select id = "inches-heightImperial">
             <option>0</option>
             <option>1</option>
@@ -124,30 +133,34 @@
           </select>
           <label for = "inches-heightImperial">in</label>
         </div>
+      </div>
 
-          <br/>
           
           <!-- Input for user weight -->
-          <label for = "user-weight">Weight: </label>
-          <input type = "number" id = "user-weight" min=1><strong><span class="label-space" id="weight-lbl"></span></strong>
-          <br/>
+          <div class="form-group">
+           <label class="control-label" for = "user-weight">Weight: </label>
+           <input class="form-control input-display" data-error="Please enter a valid weight." type = "number" id = "user-weight" min=1 required /><strong><span class="label-space" id="weight-lbl"></span></strong>
+           <div class="help-block with-errors "></div>
+          </div>
 
           <!-- Input for user age -->
-          <label for = "user-age">Age:   </label>
-          <input type = "number" id = "user-age" min=1>
-          <br/>
+          <div class="form-group">
+           <label class="control-label" for = "user-age">Age:   </label>
+           <input class="form-control input-display" data-error="Please enter age 18 or above." type = "number" id = "user-age" min=18 required />
+            <div class="help-block with-errors "></div>
+          </div>
           
           <!-- Input for user activity -->
-          <label for = "user-activity">Activity Level: </label>
-          <select class = "form-inline" id="activity-option">
+          <div class="form-group">
+           <label class="control-label" for = "user-activity">Activity Level: </label>
+           <select class = "form-control input-display" id="activity-option">
               <option id = "sedentary">Sedentary</option>
               <option id = "lightly_active">Lightly Active</option>
               <option id = "moderately_active">Moderately Active</option>
               <option id = "very_active">Very Active</option>
               <option id = "extremely_active">Extremely Active</option>
             </select>
-            <br/>
-            <br/>
+          </div>
           
           <!-- Form submit button -->
           <input type = "submit" id = "form-submit" value = "Submit" class = "btn btn-primary">

@@ -1,6 +1,11 @@
-.imperial-height-display {
+.input-display {
 	display: inline-block;
+  width: 20%;
 }
+
+/*.imperial-height-display{
+  display: inline-block;
+}*/
 
 .label-space {
 	margin-left: 5px;
