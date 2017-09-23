@@ -37,7 +37,6 @@ $(document).ready(function(){
 
       var maleArray = [];
 
-      var maleArray18under = [];
       var maleArray18_30 = [];
       var maleArray31_50 = [];
       var maleArray51_65 =[];
@@ -51,10 +50,7 @@ $(document).ready(function(){
             var y = value['Weight(kg)'];
             maleArray.push([x,y]);
             var z = parseInt(value['Age']);
-            if (z < 18) {
-              maleArray18under.push(z);
-            }
-            else if (z >= 18 && z <= 30){
+            if (z >= 18 && z <= 30){
               maleArray18_30.push(z);
             }
             else if (z >= 31 && z <= 50){
@@ -73,7 +69,6 @@ $(document).ready(function(){
 
       var femaleArray = [];
 
-      var femaleArray18under = [];
       var femaleArray18_30 = [];
       var femaleArray31_50 = [];
       var femaleArray51_65 =[];
@@ -87,10 +82,7 @@ $(document).ready(function(){
             var y = value['Weight(kg)'];
             femaleArray.push([x,y]);
             var z = parseInt(value['Age']);
-            if (z < 18){
-              femaleArray18under.push(z);
-            }
-            else if (z >= 18 && z <= 30){
+            if (z >= 18 && z <= 30){
               femaleArray18_30.push(z);
             }
             else if (z >= 31 && z <= 50){
@@ -110,7 +102,7 @@ $(document).ready(function(){
 
       displayScatterplot(maleArray,femaleArray);
 
-      displayAgeHighchart(parseInt(maleArray18under.length + femaleArray18under), parseInt(maleArray18_30 + femaleArray18_30), parseInt(maleArray31_50 + femaleArray31_50), parseInt(maleArray51_65 + femaleArray51_65), parseInt(maleArray65plus + femaleArray65plus));
+      displayAgeHighchart(parseInt(maleArray18_30 + femaleArray18_30), parseInt(maleArray31_50 + femaleArray31_50), parseInt(maleArray51_65 + femaleArray51_65), parseInt(maleArray65plus + femaleArray65plus));
 
     });
 
@@ -235,7 +227,7 @@ function displayScatterplot(maleArray, femaleArray){
     });
 }
 
-function displayAgeHighchart(under18, age18_30, age31_50, age51_65, over65){
+function displayAgeHighchart(age18_30, age31_50, age51_65, over65){
         //Highcharts Pie Chart
         Highcharts.chart('agePieCharts', {
             chart: {
@@ -266,11 +258,7 @@ function displayAgeHighchart(under18, age18_30, age31_50, age51_65, over65){
             series: [{
                 name: 'Age Groups',
                 colorByPoint: true,
-                data: [{
-                    name: 'Under 18',
-                    color: 'rgba(0, 0, 255, .5)',
-                    y: under18
-                },  
+                data: [
                 {
                     name: '18 - 30',
                     color: 'rgba(225, 0, 0, .5)',
