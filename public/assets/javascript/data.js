@@ -102,7 +102,7 @@ $(document).ready(function(){
 
       displayScatterplot(maleArray,femaleArray);
 
-      displayAgeHighchart(parseInt(maleArray18_30 + femaleArray18_30), parseInt(maleArray31_50 + femaleArray31_50), parseInt(maleArray51_65 + femaleArray51_65), parseInt(maleArray65plus + femaleArray65plus));
+      displayAgeHighchart(parseInt(maleArray18_30.length) + parseInt(femaleArray18_30.length), parseInt(maleArray31_50,length) + parseInt(femaleArray31_50.length), parseInt(maleArray51_65.length) + parseInt(femaleArray51_65.length), parseInt(maleArray65plus.length) + parseInt(femaleArray65plus.length));
 
     });
 
