@@ -140,3 +140,12 @@ h6 {
   color: #FFF;
 }
 
+#aboutJumbo {
+  background-image: url("../images/calc-background.jpg");
+  background-color: #2D3F50;
+}
+
+#aboutJumbo h1, #aboutJumbo h2, #aboutJumbo h3, #aboutJumbo p{
+  color: #FFF;
+}
+
