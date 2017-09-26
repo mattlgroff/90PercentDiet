@@ -98,11 +98,19 @@ $(document).ready(function(){
 
       }); //End Female Ref
 
-
-
       displayScatterplot(maleArray,femaleArray);
 
-      displayAgeHighchart(parseInt(maleArray18_30.length) + parseInt(femaleArray18_30.length), parseInt(maleArray31_50,length) + parseInt(femaleArray31_50.length), parseInt(maleArray51_65.length) + parseInt(femaleArray51_65.length), parseInt(maleArray65plus.length) + parseInt(femaleArray65plus.length));
+      var age18_30 = parseInt(maleArray18_30.length) + parseInt(femaleArray18_30.length);
+      var age31_50 = parseInt(maleArray31_50.length) + parseInt(femaleArray31_50.length);
+      var age51_65 = parseInt(maleArray51_65.length) + parseInt(femaleArray51_65.length);
+      var over65 = parseInt(maleArray65plus.length) + parseInt(femaleArray65plus.length);
+
+      displayAgeHighchart( age18_30, age31_50, age51_65, over65);
+
+      console.log("Users ages 18 - 30: " + (parseInt(maleArray18_30.length) + parseInt(femaleArray18_30.length)));
+      console.log("Users ages 31 - 50: " + (parseInt(maleArray31_50.length) + parseInt(femaleArray31_50.length)));
+      console.log("Users ages 50 - 65: " + (parseInt(maleArray51_65.length) + parseInt(femaleArray51_65.length)));
+      console.log("Users ages 65 and Older: " + (parseInt(maleArray65plus.length) + parseInt(femaleArray65plus.length)));
 
     });
 
