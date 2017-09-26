@@ -105,7 +105,9 @@ $(document).ready(function(){
       var age51_65 = parseInt(maleArray51_65.length) + parseInt(femaleArray51_65.length);
       var over65 = parseInt(maleArray65plus.length) + parseInt(femaleArray65plus.length);
 
-      displayAgeHighchart( age18_30, age31_50, age51_65, over65);
+      displayAgeHighchart( age18_30, age31_50, age51_65, over65, "agePieCharts" , 'Age Split Between Users', 'rgba(225, 0, 0, .5)', 'rgba(225, 225, 0, .5)' , 'rgba(225, 0, 225, .5)', 'rgba(0, 255, 0, .5)' );
+      displayAgeHighchart(femaleArray18_30.length , femaleArray31_50.length , femaleArray51_65.length, femaleArray65plus.length, "femaleAge" , "Age Split for Female Users" , "rgba(191, 63, 191, 0.2)", "rgba(223, 71, 223, 0.7)", "rgba(122, 20, 122, 0.7)", "purple");
+      displayAgeHighchart(maleArray18_30.length , maleArray31_50.length , maleArray51_65.length, maleArray65plus.length, "maleAge", 'Age Split for Male Users' , "aqua", "turquoise", "cornflowerblue", "teal");
 
       console.log("Users ages 18 - 30: " + (parseInt(maleArray18_30.length) + parseInt(femaleArray18_30.length)));
       console.log("Users ages 31 - 50: " + (parseInt(maleArray31_50.length) + parseInt(femaleArray31_50.length)));
@@ -235,9 +237,9 @@ function displayScatterplot(maleArray, femaleArray){
     });
 }
 
-function displayAgeHighchart(age18_30, age31_50, age51_65, over65){
+function displayAgeHighchart(age18_30, age31_50, age51_65, over65, chartArea, chartTitle , color1, color2, color3, color4){
         //Highcharts Pie Chart
-        Highcharts.chart('agePieCharts', {
+        Highcharts.chart(chartArea, {
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
@@ -245,7 +247,7 @@ function displayAgeHighchart(age18_30, age31_50, age51_65, over65){
                 type: 'pie'
             },
             title: {
-                text: 'Age Split Between Users'
+                text: chartTitle
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -269,22 +271,22 @@ function displayAgeHighchart(age18_30, age31_50, age51_65, over65){
                 data: [
                 {
                     name: '18 - 30',
-                    color: 'rgba(225, 0, 0, .5)',
+                    color: color1,
                     y: age18_30
                 },  
                 {
                     name: '31 - 50',
-                    color: 'rgba(225, 225, 0, .5)',
+                    color: color2,
                     y: age31_50
                 },  
                 {
                     name: '51 - 65',
-                    color: 'rgba(225, 0, 225, .5)',
+                    color: color3,
                     y: age51_65
                 },  
                 {
                     name: '65 and Older',
-                    color: 'rgba(0, 255, 0, .5)',
+                    color: color4,
                     y: over65
                 }
 
