@@ -33,7 +33,7 @@ h4,
 h5,
 h6 {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .navbar {
@@ -81,3 +81,25 @@ h6 {
 .post-header {
 	font-size: 75;
 }
+
+.jumbo {
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+#articlesJumbo {
+  background-image: url("../images/articles-background.png");
+  background-color: #000;
+}
+
+#articlesJumbo h1, #articlesJumbo h2, #articlesJumbo h3 {
+  opacity: 0.8;
+  color: #FFF;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+}
+
+
