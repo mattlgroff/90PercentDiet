@@ -87,13 +87,9 @@ h6 {
   background-repeat: no-repeat;
 }
 
-#articlesJumbo {
-  background-image: url("../images/articles-background.png");
+#foodJumbo {
+  background-image: url("../images/food-background.jpg");
   background-color: #000;
-}
-
-#articlesJumbo h1, #articlesJumbo h2, #articlesJumbo h3 {
-  opacity: 0.8;
   color: #FFF;
   text-shadow:
     -1px -1px 0 #000,
@@ -102,4 +98,45 @@ h6 {
     1px 1px 0 #000; 
 }
 
+#foodJumbo h1, #foodJumbo h2, #foodJumbo h3 {
+  opacity: 0.9;
+}
+
+#articlesJumbo {
+  background-image: url("../images/articles-background.jpg");
+  background-color: #000;
+}
+
+#articlesJumbo h1, #articlesJumbo h2, #articlesJumbo h3 {
+  opacity: 0.9;
+  color: #FFF;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+}
+
+#demoJumbo {
+  background-image: url("../images/demo-background.jpg");
+  background-color: #000;
+}
+
+#demoJumbo h1, #demoJumbo h2, #demoJumbo h3{
+  color: #FFF;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+}
+
+#calcJumbo {
+  background-image: url("../images/calc-background.jpg");
+  background-color: #2D3F50;
+}
+
+#calcJumbo h1, #calcJumbo h2, #calcJumbo h3, #calcJumbo p{
+  color: #FFF;
+}
 
